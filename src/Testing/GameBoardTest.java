@@ -1,5 +1,8 @@
-import org.junit.jupiter.api.*;
+package Testing;
 
+import Main.GameBoard;
+
+import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class GameBoardTest {

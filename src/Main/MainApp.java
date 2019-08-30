@@ -1,3 +1,5 @@
+package Main;
+
 import java.util.Scanner;
 
 public class MainApp {
@@ -11,11 +13,19 @@ public class MainApp {
         System.out.println("-----------------------------");
 
         GameBoard ttt = new GameBoard();
+        Bot bot = new Bot();
         do{
-            System.out.println("Player " + ttt.getPlayer() + ", enter x (space) y coordinates: ");
-            int x = scan.nextInt();
-            int y = scan.nextInt();
-            ttt.add(x, y);
+            if(ttt.getPlayer() == 1) {
+                System.out.println("Player " + ttt.getPlayer() + ", enter x (space) y coordinates: ");
+                int x = scan.nextInt();
+                int y = scan.nextInt();
+                ttt.add(x, y);
+            }
+            else {
+                ttt.setBoard(bot.addPhase(ttt));
+                ttt.setPlayer(1);
+                System.out.println("TTT BOT: YOUR MOVE");
+            }
             System.out.println("----------------");
             printBoard(ttt.getBoard());
             System.out.println("----------------");

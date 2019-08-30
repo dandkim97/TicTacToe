@@ -1,3 +1,5 @@
+package Main;
+
 public class GameBoard {
     private char[][] board;
     private int size;
@@ -30,10 +32,9 @@ public class GameBoard {
     public int getPlayer(){
         return player;
     }
-
-    public char[][] getBoard() {
-        return board;
-    }
+    public void setPlayer(int player) { this.player = player; }
+    public char[][] getBoard() { return board; }
+    public void setBoard(char[][] board) { this.board = board; }
 
     public boolean gameOver() {
         if(checkRows() ){
