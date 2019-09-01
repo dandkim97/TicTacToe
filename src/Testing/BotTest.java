@@ -9,6 +9,20 @@ import static org.junit.jupiter.api.Assertions.*;
 class BotTest {
 
     @Test
+    void testIfBotBlocksFork(){
+        Bot testBot = new Bot();
+        char[][] blockForkExpected = new char[3][3];
+        blockForkExpected[0][1] = 'O';
+        GameBoard testBoard = new GameBoard();
+        testBoard.add(0,0);
+        testBoard.add(1,1);                     // the bot will place center.
+        testBoard.add(2,2);
+        testBoard.setBoard(testBot.addPhase(testBoard));
+        char[][] test = testBoard.getBoard();
+        assertEquals(test[0][1], blockForkExpected[0][1]);
+    }
+
+    @Test
     void testIfBotPlacesOnCenter(){
         Bot testBot = new Bot();
         char[][] centerExpected = new char[3][3];

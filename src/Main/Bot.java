@@ -12,9 +12,10 @@ public class Bot {
 //
 //        } else if (canFork()){
 //
-//        } else if (canBlockFork()){
-//
-        if (canSetCenter(board)) {
+        if (canBlockFork(board)){
+              newBoard = setEmptySide(board);               // to block fork, prevent skip to empty side placement.
+        }
+        else if (canSetCenter(board)) {
             newBoard = setCenter(board);
         }
         else if (canSetOppositeCorner(board)) {
