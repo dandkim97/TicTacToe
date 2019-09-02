@@ -8,9 +8,10 @@ public class Bot {
         char[][] newBoard = new char[3][3];
 //        if (canWin()){
 //
-//        } else if (canBlock()){
-//
-        if (canFork(board)){
+        if (canBlock(board)) {
+            newBoard[2][2] = 'Z';
+        }
+        else if (canFork(board)){
               newBoard = setFork(board);
         }
         else if (canBlockFork(board)){
@@ -29,6 +30,59 @@ public class Bot {
             newBoard = setEmptySide(board);
         }
         return newBoard;
+    }
+
+    private boolean canBlock(char[][] board){
+//        return (stopRows(board) || stopColumns(board) || stopDiagonals(board));
+        return (stopDiagonals(board) );
+    }
+
+    private boolean stopRows(char[][] board){
+        for(int r = 0; r < board.length; r++){
+            int numOfX = 0, numOfEmpty = 0;
+            for(int c = 0; c < board[0].length; c++){
+                if(board[r][c] == 'X'){
+                    numOfX++;
+                }
+                else if (board[r][c] == 0) {
+                    numOfEmpty++;
+                }
+            }
+            if((numOfX == 2) && (numOfEmpty == 1) ) {
+                System.out.println("stop at row!");
+                return true;
+            }
+        }
+        return false;
+    }
+    private boolean stopColumns(char[][] board){
+        for(int c = 0; c < board[0].length; c++){
+            int numOfX = 0, numOfEmpty = 0;
+            for(int r = 0; r < board.length; r++){
+                if(board[r][c] == 'X'){
+                    numOfX++;
+                }
+                else if (board[r][c] == 0) {
+                    numOfEmpty++;
+                }
+            }
+            if((numOfX == 2) && (numOfEmpty == 1) ) {
+                System.out.println("Stop at column!");
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // leftDiagonal converts properly to string value but doesn't match XX even when it out.println XX.
+    private boolean stopDiagonals(char[][] board){
+        String leftDiagonal = "" + board[0][0] + board[1][1] + board[2][2];
+        String rightDiagonal = "" + board[0][2] + board[1][1] + board[2][0];
+        System.out.println(leftDiagonal);
+        System.out.println(rightDiagonal);
+//        if(board[0][0] == 'X' && board[1][1] == 'X' && board[2][2] == 0)
+//            return true;
+        return (leftDiagonal == "XX" || rightDiagonal == "XX" );
     }
 
     private char[][] setFork(char[][] board){
