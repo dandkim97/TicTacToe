@@ -10,10 +10,11 @@ public class Bot {
 //
 //        } else if (canBlock()){
 //
-//        } else if (canFork()){
-//
-        if (canBlockFork(board)){
-              newBoard = setEmptySide(board);               // to block fork, prevent skip to empty side placement.
+        if (canFork(board)){
+              newBoard = setFork(board);
+        }
+        else if (canBlockFork(board)){
+              newBoard = setEmptySide(board);               // to block fork, prevent corner placement by skipping to empty side placement.
         }
         else if (canSetCenter(board)) {
             newBoard = setCenter(board);
@@ -30,7 +31,29 @@ public class Bot {
         return newBoard;
     }
 
-    // Add blockFork and testing
+    private char[][] setFork(char[][] board){
+        if(isO(board[0][0]) && isEmpty(board[2][2]) ){
+            board[2][2] = 'O';
+        }
+        else if(isO(board[2][2]) && isEmpty(board[0][0]) ){
+            board[0][0] = 'O';
+        }
+        else if(isO(board[0][2]) && isEmpty(board[2][0]) ){
+            board[2][0] = 'O';
+        }
+        else if(isO(board[2][0]) && isEmpty(board[0][2]) ){
+            board[0][2] = 'O';
+        }
+        return board;
+    }
+
+    private boolean canFork(char[][] board){
+        return( (isO(board[0][0]) && isEmpty(board[2][2]) )
+            || (isO(board[2][2]) && isEmpty(board[0][0]) )
+            || (isO(board[0][2]) && isEmpty(board[2][0]) )
+            || (isO(board[2][0]) && isEmpty(board[0][2]) ) );
+    }
+
     private boolean canBlockFork(char[][] board){
         return( isX(board[0][0]) && isX(board[2][2])
                 || isX(board[0][2]) && isX(board[2][0]) );
@@ -110,6 +133,10 @@ public class Bot {
 
     private boolean isX(char c){
         return (c == 'X');
+    }
+
+    private boolean isO(char c){
+        return (c == 'O');
     }
 }
 
