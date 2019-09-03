@@ -12,7 +12,7 @@ class BotTest {
     void testIfBotBlocksDiagonals(){
         Bot testBot = new Bot();
         char[][] blockExpected = new char[3][3];
-        blockExpected[2][2] = 'Z';
+        blockExpected[2][2] = 'O';
         GameBoard testBoard = new GameBoard();
         testBoard.add(0,0);
         testBoard.add(0,1);

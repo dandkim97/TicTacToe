@@ -2,6 +2,9 @@ package Main;
 
 public class Bot {
     // Main.Bot is always Player 2
+    private int botR;
+    private int botC;
+
     public char[][] addPhase(GameBoard ttt) {
         // return board with optimal move added in.
         char[][] board = ttt.getBoard();
@@ -10,7 +13,7 @@ public class Bot {
 //
         if (canBlock(board)) {
             System.out.println("canBlock called");
-            newBoard[2][2] = 'Z';
+            newBoard = setBlock(board);
         }
         else if (canFork(board)){
               newBoard = setFork(board);
@@ -33,9 +36,13 @@ public class Bot {
         return newBoard;
     }
 
+    private char[][] setBlock(char[][] board){
+        board[botR][botC] = 'O';
+        return board;
+    }
+
     private boolean canBlock(char[][] board){
-//        return (stopRows(board) || stopColumns(board) || stopDiagonals(board));
-        return (stopDiagonals(board) );
+        return (stopRows(board) || stopColumns(board) || stopDiagonals(board));
     }
 
     private boolean stopRows(char[][] board){
@@ -46,6 +53,8 @@ public class Bot {
                     numOfX++;
                 }
                 else if (board[r][c] == 0) {
+                    botR = r;
+                    botC = c;
                     numOfEmpty++;
                 }
             }
@@ -56,6 +65,7 @@ public class Bot {
         }
         return false;
     }
+
     private boolean stopColumns(char[][] board){
         for(int c = 0; c < board[0].length; c++){
             int numOfX = 0, numOfEmpty = 0;
@@ -64,6 +74,8 @@ public class Bot {
                     numOfX++;
                 }
                 else if (board[r][c] == 0) {
+                    botR = r;
+                    botC = c;
                     numOfEmpty++;
                 }
             }
@@ -78,7 +90,31 @@ public class Bot {
     private boolean stopDiagonals(char[][] board){
         String leftDiagonal = ("" + board[0][0] + board[1][1] + board[2][2]).replace("\0", "");
         String rightDiagonal = ("" + board[0][2] + board[1][1] + board[2][0]).replace("\0", "");
-        return (leftDiagonal.equals("XX") || rightDiagonal.equals("XX"));
+        if(leftDiagonal.equals("XX")){
+            if(board[0][0] == 0){
+                botR = 0; botC = 0;
+            }
+            else if(board[1][1] == 0){
+                botR = 1; botC = 1;
+            }
+            else{
+                botR = 2; botC = 2;
+            }
+            return true;
+        }
+        else if(rightDiagonal.equals("XX")){
+            if(board[0][2] == 0){
+                botR = 0; botC = 2;
+            }
+            else if(board[1][1] == 0){
+                botR = 1; botC = 1;
+            }
+            else{
+                botR = 2; botC = 0;
+            }
+            return true;
+        }
+        return false;
     }
 
     private char[][] setFork(char[][] board){
