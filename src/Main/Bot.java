@@ -9,6 +9,7 @@ public class Bot {
 //        if (canWin()){
 //
         if (canBlock(board)) {
+            System.out.println("canBlock called");
             newBoard[2][2] = 'Z';
         }
         else if (canFork(board)){
@@ -74,15 +75,10 @@ public class Bot {
         return false;
     }
 
-    // leftDiagonal converts properly to string value but doesn't match XX even when it out.println XX.
     private boolean stopDiagonals(char[][] board){
-        String leftDiagonal = "" + board[0][0] + board[1][1] + board[2][2];
-        String rightDiagonal = "" + board[0][2] + board[1][1] + board[2][0];
-        System.out.println(leftDiagonal);
-        System.out.println(rightDiagonal);
-//        if(board[0][0] == 'X' && board[1][1] == 'X' && board[2][2] == 0)
-//            return true;
-        return (leftDiagonal == "XX" || rightDiagonal == "XX" );
+        String leftDiagonal = ("" + board[0][0] + board[1][1] + board[2][2]).replace("\0", "");
+        String rightDiagonal = ("" + board[0][2] + board[1][1] + board[2][0]).replace("\0", "");
+        return (leftDiagonal.equals("XX") || rightDiagonal.equals("XX"));
     }
 
     private char[][] setFork(char[][] board){
