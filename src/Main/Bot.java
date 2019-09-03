@@ -2,8 +2,8 @@ package Main;
 
 public class Bot {
     // Main.Bot is always Player 2
-    private int botR;
-    private int botC;
+    private int botR;               // setBlock helper
+    private int botC;               // variables
 
     public char[][] addPhase(GameBoard ttt) {
         // return board with optimal move added in.
