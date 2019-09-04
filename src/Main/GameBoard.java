@@ -2,7 +2,6 @@ package Main;
 
 public class GameBoard {
     private char[][] board;
-    private int size;
     private int player;
 
     private String rowO = "OOO";
@@ -10,7 +9,6 @@ public class GameBoard {
 
     public GameBoard() {
         board = new char[3][3];
-        size = 0;
         player = 1;
     }
 
@@ -23,7 +21,6 @@ public class GameBoard {
                 board[r][c] = 'O';
                 player = 1;
             }
-            size++;
         }else{
             System.out.println("No cheating!");
         }
@@ -37,23 +34,26 @@ public class GameBoard {
     public void setBoard(char[][] board) { this.board = board; }
 
     public boolean gameOver() {
-        if(checkRows() ){
-            return true;
-        }
-        if(checkColumns() ){
-            return true;
-        }
-        if(checkDiagonals()){
-            return true;
-        }
-        if(size == 9){
-            System.out.println("Game is Tied");
-            return true;
-        }
-        return false;
+        return (   isThreeInARow()
+                || isThreeInAColumn()
+                || isThreeInADiagonal()
+                || isBoardFull() );
+
     }
 
-    private boolean checkRows() {
+    private boolean isBoardFull(){
+        for(int r = 0; r < board.length; r++){
+            for(int c = 0; c < board[0].length; c++){
+                if(board[r][c] == 0){
+                    return false;
+                }
+            }
+        }
+        System.out.println("It is a draw!");
+        return true;
+    }
+
+    private boolean isThreeInARow() {
         for (int r = 0; r < board.length; r++) {
             String curr = "";
             for (int c = 0; c < board[0].length; c++) {
@@ -71,7 +71,7 @@ public class GameBoard {
         return false;
     }
 
-    private boolean checkColumns(){
+    private boolean isThreeInAColumn(){
         for(int c = 0; c < board[0].length; c++){
             String curr = "";
             for(int r = 0; r < board.length; r++){
@@ -89,7 +89,7 @@ public class GameBoard {
         return false;
     }
 
-    private boolean checkDiagonals(){
+    private boolean isThreeInADiagonal(){
         String diag1 = "" + board[0][0] + board[1][1] + board[2][2];
         String diag2 = "" + board[2][0] + board[1][1] + board[0][2];
         if(diag1.equals(rowO) || diag2.equals(rowO)){

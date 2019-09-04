@@ -9,6 +9,22 @@ import static org.junit.jupiter.api.Assertions.*;
 class BotTest {
 
     @Test
+    void testIfBotWins(){
+        Bot testBot = new Bot();
+        char[][] winExpected = new char[3][3];
+        winExpected[1][2] = 'O';
+        GameBoard testBoard = new GameBoard();
+        testBoard.add(0,0);
+        testBoard.add(1,1);
+        testBoard.add(2,2);
+        testBoard.add(1,0);
+        testBoard.add(2,0);
+        testBoard.setBoard(testBot.addPhase(testBoard));
+        char[][] test = testBoard.getBoard();
+        assertEquals(test[1][2], winExpected[1][2]);
+    }
+
+    @Test
     void testIfBotBlocksDiagonals(){
         Bot testBot = new Bot();
         char[][] blockExpected = new char[3][3];
